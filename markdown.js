@@ -1,8 +1,5 @@
 const fs = require('fs');
 const fetch = require('node-fetch')
-//const path = require('path');
-
-//let dirpath = path.posix.basename('README.md');
         
 fs.readFile('README.md', 'utf8', function(err, data) {  
     if (err) throw err;
@@ -11,24 +8,28 @@ fs.readFile('README.md', 'utf8', function(err, data) {
         let allData = data[i];
         content += allData        
     }
-    let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
-    let found = content.match(regex);
-    if (found) {
-        for (let i = 0; i < found.length; i++) {
-        fetch(found[i]).then((result) => {
-            return result.text();
-        }).then((result) => {
-            let status = result.status;
-            if (status >= 400) {
-                return 'fail'
-            } else {
-                return 'ok'
+    const validate = () => {
+        let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
+        let found = content.match(regex);
+        if (found) {
+            for (let i = 0; i < found.length; i++) {
+                let request = found[i]
+                //console.log(request);
+            fetch(request).then((result) => {
+                let status = result.status
+                //console.log(status);
+                if (status === 200) {
+                    console.log('OK')
+                } else {
+                    console.log('FAIL')
+                }
+                return status
+            }).catch((err) => {
+                console.log(err.message);
+                })
+            
             }
-        }).catch((err) => {
-            console.log(err.message);
-        })
+        }
     }
-    } else {
-        console.log(':c')
-    }
+validate();
 });
