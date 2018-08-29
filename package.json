@@ -4,9 +4,7 @@
   "description": "Find and validate URLs in .md archives",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "eslint": "eslint",
-    "eslintInit": "eslint --init"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -26,11 +24,7 @@
   },
   "homepage": "https://github.com/florenciasilva/cdmx-2018-01-FE-markdown#readme",
   "dependencies": {
-    "jest": "^23.5.0"
-  },
-  "devDependencies": {
-    "eslint": "^5.4.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "jest": "^23.5.0",
+    "node-fetch": "^2.2.0"
   }
 }
