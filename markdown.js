@@ -17,7 +17,7 @@ fs.readFile('README.md', 'utf8', (err, data) => {
     });
 }
 
-const getURLs = (content) => {
+const getURLs = (content, requestHTTP) => {
 let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
 let found = content.match(regex);
 console.log(found);
@@ -26,22 +26,26 @@ console.log(found);
         let total = 0;
         for (let i = 0; i < found.length; i++) {
             let request = found[i]
-        fetch(request).then((result) => {
-            let status = result.status
-            if (status === 200) {
-                console.log(found[i] + ' => ' +'OK ' + status)
-                active[i] += active++
-                total[i] += total++
-            } else {
-                console.log(found[i] + ' => ' +'FAIL ' + status)
-                broken[i] += broken++
-                total[i] += total++
-            }
-            return status
-        }).catch((err) => {
-            console.log(err.message);
-            })
-            };
-}
+            const requestHTTP = (request) => {
+                fetch(request).then((result) => {
+                    let status = result.status
+                    if (status === 200) {
+                        console.log(found[i] + ' => ' +'OK ' + status)
+                        active[i] += active++
+                        total[i] += total++
+                    } else {
+                        console.log(found[i] + ' => ' +'FAIL ' + status)
+                        broken[i] += broken++
+                        total[i] += total++
+                    }
+                    return status
+                }).catch((err) => {
+                    console.log(err.message);
+                    })
+                    };
+            requestHTTP(request);
+
+        } 
+};
 
 readfile(getURLs);
