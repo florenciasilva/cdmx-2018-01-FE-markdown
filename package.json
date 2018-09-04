@@ -19,6 +19,9 @@
   ],
   "author": "Florencia Silva Olivera",
   "license": "ISC",
+  "bin": {
+    "md-links": "./markdown.js"
+  },
   "bugs": {
     "url": "https://github.com/florenciasilva/cdmx-2018-01-FE-markdown/issues"
   },
