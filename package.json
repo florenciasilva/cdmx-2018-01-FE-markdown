@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/florenciasilva/cdmx-2018-01-FE-markdown#readme",
   "dependencies": {
+    "commander": "^2.17.1",
     "jest": "^23.5.0",
     "node-fetch": "^2.2.0"
   }

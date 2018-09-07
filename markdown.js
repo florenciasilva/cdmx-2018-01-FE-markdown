@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const fs = require('fs');
 const fetch = require('node-fetch')
 
@@ -16,14 +17,18 @@ fs.readFile('README.md', 'utf8', (err, data) => {
         }
     });
 }
+const counter = () => {
+let broken = 1;
+let active = 0;
+let total = 0;
+
+console.log('Broken' + ' ' + broken)
+}
 
 const getURLs = (content, requestHTTP) => {
-let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
-let found = content.match(regex);
-console.log(found);
-        let broken = 0;
-        let active = 0;
-        let total = 0;
+    let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
+    let found = content.match(regex);
+    console.log(found);
         for (let i = 0; i < found.length; i++) {
             let request = found[i]
             const requestHTTP = (request) => {
@@ -31,21 +36,37 @@ console.log(found);
                     let status = result.status
                     if (status === 200) {
                         console.log(found[i] + ' => ' +'OK ' + status)
-                        active[i] += active++
-                        total[i] += total++
+                        active++
+                        total++
                     } else {
                         console.log(found[i] + ' => ' +'FAIL ' + status)
-                        broken[i] += broken++
-                        total[i] += total++
+                        broken++
+                        total++
                     }
                     return status
                 }).catch((err) => {
                     console.log(err.message);
                     })
                     };
-            requestHTTP(request);
-
-        } 
+                    requestHTTP(request)
+                } 
 };
 
-readfile(getURLs);
+
+const program = require('commander');
+
+program
+  .version('0.1.0')
+  .option('validate, --validate', 'Validate all URLs from .md')
+  .option('status, --status', 'See Status of all URLs from .md')
+  .parse(process.argv);
+
+if (program.validate) {
+    readfile(getURLs);
+};
+if (program.status) {
+    counter();
+}
+/*if (program.pineapple) console.log('  - pineapple');
+if (program.bbqSauce) console.log('  - bbq');
+console.log('  - %s cheese', program.cheese);*/
