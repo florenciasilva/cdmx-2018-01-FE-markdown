@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const fetch = require('node-fetch')
 const program = require('commander');
@@ -10,12 +9,11 @@ program
   .option('stats, --stats', 'See Status of all URLs from .md')
   .parse(process.argv);
 
-fs.readFile('README.md', 'utf8', (err, data) => {
+const findURL = fs.readFile('README.md', 'utf8', (err, data) => {
     if (err) throw err;
-    let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
-    let found = data.match(regex);
-    let urls = [];
-    
+    const regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
+    const found = data.match(regex);
+    const urls = [];
     for(let i = 0; i < found.length; i++) {
        urls.push(found[i]);
     }
@@ -24,9 +22,9 @@ fs.readFile('README.md', 'utf8', (err, data) => {
     if (program.validate) {
         requestHTTP(urls);
     };
+        return urls
+    });
 
-    return urls
-});
 
 const requestHTTP = (found) => {
     let broken = 0;
@@ -34,7 +32,7 @@ const requestHTTP = (found) => {
     let total = 0;
     for(let i = 0; i < found.length; i++) {
         fetch(found[i]).then((response) => {
-    let status = response.status;
+    const status = response.status;
     console.log(found[i] + ' ' + status);
     if(status >= 200 && status <= 400) {
         active++
@@ -43,6 +41,7 @@ const requestHTTP = (found) => {
         broken++
         total++
     }
+
     return status       
         }).catch((err) => {
             console.log(err.message);
@@ -57,3 +56,7 @@ const requestHTTP = (found) => {
     };
 }
     
+module.exports = {
+    findURL,
+    requestHTTP
+}
