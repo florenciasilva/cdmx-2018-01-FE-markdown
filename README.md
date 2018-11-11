@@ -24,8 +24,6 @@ Para Tests, se utiliza [Jest](https://jestjs.io/)
 
 ## Instalación
 
-Ubicate en la carpeta del proyecto que quieres analizar y en consola escribe:  
-```npm install https://github.com/florenciasilva/cdmx-2018-01-FE-markdown.git ```
-
-Una vez que la instalación haya terminado, ya puedes utilizar los comandos ```md-links``` con sus opciones ```--validate``` y ```--stats```
+Para utilizar MdLinks, primero necesitas hacer ```git clone``` de éste repositorio. Una vez clonado, ```cd modulo-npm-markdown-links``` y luego ```npm link```.
+Una vez terminado, podrás correr los comandos ```mdLinks```, ```mdLinks --validate``` y ```mdLinks --stats```
 
